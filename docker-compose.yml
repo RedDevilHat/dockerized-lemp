@@ -1,0 +1,27 @@
+version: "3.6"
+services:
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./../:/code
+  php:
+    build:
+      ./php
+    volumes:
+      - ./../:/code
+  mysql:
+    image: mysql
+    volumes:
+    - ./mysql:/etc/mysql/conf.d/
+    - ./tmp:/opt/tmp
+    environment:
+      MYSQL_USER: simple
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: simple
+      MYSQL_ROOT_PASSWORD: supersecret
+    ports:
+      - "3306:3306"
